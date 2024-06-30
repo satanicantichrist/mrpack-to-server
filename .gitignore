@@ -2,3 +2,5 @@
 mods
 modrinth.index.json
 overrides
+server
+*.mrpack
