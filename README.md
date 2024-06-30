@@ -1,5 +1,7 @@
 # mrpack-to-server
 Turns ```.mrpack``` modpack to runnable server. With only mods that are needed on the server.
+
+for now, works only for fabric based modpacks
 ---
 # Instalation:
 To download run this command
