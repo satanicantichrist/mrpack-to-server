@@ -12,3 +12,5 @@ To generate server from ```.mrpack``` file, run this command
 ```server_generator.sh <path to .mrpack file>```
 
 Server will be outputed in to ```server``` folder, where you can run ```start.sh``` script to start the server.
+
+to change the ```start.sh``` script for all future generations, edit the ```default_server_start.sh```
