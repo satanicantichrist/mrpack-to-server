@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 filepath=$1
 
 tmpdir=$(mktemp -d)
