@@ -14,6 +14,7 @@ packversion=$(echo $data | jq '."versionId"'  | cut -d "\"" -f2)
 totalmods=$(echo $data | jq '."files" | length')
 fabric=$(echo $data | jq '."dependencies"."fabric-loader"'  | cut -d "\"" -f2)
 neoforge=$(echo $data | jq '."dependencies"."neoforge"'  | cut -d "\"" -f2)
+quilt=$(echo $data | jq '."dependencies"."quilt-loader"'  | cut -d "\"" -f2)
 minecraft=$(echo $data | jq '."dependencies"."minecraft"'  | cut -d "\"" -f2)
 path=server
 optionalall=0
@@ -90,6 +91,14 @@ if [[ "$neoforge" != "null" ]]; then
 	java -jar $tmpdir/neoforge-installer.jar --install-server ./server
         echo "neoforge-version: $neoforge; minecraft-version: $minecraft; pack-version: $packversion" > $path/versions.txt
 	echo Server generated. To start server, run run.sh
+fi
+
+if [[ "$quilt" != "null" ]]; then
+        echo Downloading quilt installer
+        curl -A "$useragent" --progress-bar -s -L https://quiltmc.org/api/v1/download-latest-installer/java-universal -o $tmpdir/quilt-installer.jar
+        java -jar $tmpdir/quilt-installer.jar install server $minecraft $quilt --install-dir="server" --download-server --create-scripts
+	echo "quilt-loader-version: $quilt; minecraft-version: $minecraft; pack-version: $packversion" > $path/versions.txt
+        echo Server generated. To start server, run quilt-server-launch.jar
 fi
 
 rm -rf "$tmpdir"
