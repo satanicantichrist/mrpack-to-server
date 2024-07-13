@@ -1,8 +1,12 @@
 # mrpack-to-server
 Turns ```.mrpack``` modpack to runnable server. With only mods that are needed on the server.
 
-for now, works only for fabric based modpacks
+for now, works only for fabric and neoforge based modpacks
 ---
+
+# Requirements
+jq - for working with json data from modrinth api. ```apt install jq```
+
 # Instalation:
 To download run this command
 ```git clone https://github.com/satanicantichrist/mrpack-to-server.git```
