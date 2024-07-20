@@ -1,7 +1,7 @@
 # mrpack-to-server
 Turns ```.mrpack``` modpack to runnable server. With only mods that are needed on the server.
 
-for now, works only for fabric and neoforge based modpacks
+Forge is unsuported for now
 ---
 
 # Requirements
@@ -15,6 +15,5 @@ To download run this command
 To generate server from ```.mrpack``` file, run this command
 ```server_generator.sh <path to .mrpack file>```
 
-Server will be outputed in to ```server``` folder, where you can run ```start.sh``` script to start the server.
+Server will be outputed in to ```server``` folder.
 
-to change the ```start.sh``` script for all future generations, edit the ```default_server_start.sh```
