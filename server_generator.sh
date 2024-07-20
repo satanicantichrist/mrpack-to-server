@@ -36,12 +36,12 @@ for ((i = 0; i < $totalmods; i++)) do
 
 	if [[ "$rq" == "required" ]]; then
 		echo downloading $modname"..."
-		curl -A "$useragent" --progress-bar $dwlink -o $path/$dwpath
+		curl -A "$useragent" --progress-bar "$dwlink" -o "$path/$dwpath"
 	elif [[ "$rq" == "optional" ]]; then
 
 		if [[ $optionalall = 1 ]]; then
 			echo downloading $modname"..."
-                        curl -A "$useragent" --progress-bar $dwlink -o $path/$dwpath
+                        curl -A "$useragent" --progress-bar "$dwlink" -o "$path/$dwpath"
 			continue
 		fi
 
@@ -56,7 +56,7 @@ for ((i = 0; i < $totalmods; i++)) do
 		if [[ "$optional" == "all" ]]; then
 			optionalall=1
                         echo downloading $modname"..."
-                        curl -A "$useragent" --progress-bar $dwlink -o $path/$dwpath
+                        curl -A "$useragent" --progress-bar "$dwlink" -o "$path/$dwpath"
 			continue
 		fi
 
@@ -68,7 +68,7 @@ for ((i = 0; i < $totalmods; i++)) do
 
 		if [[ $optional == [Yy] ]]; then
                 	echo downloading $modname"..."
-                	curl -A "$useragent" --progress-bar $dwlink -o $path/$dwpath
+                	curl -A "$useragent" --progress-bar "$dwlink" -o "$path/$dwpath"
 		else
 			echo Skipping mod...
 		fi
