@@ -1,0 +1,11 @@
+#!/bin/bash
+set -e 
+
+api="https://staging-api.modrinth.com/v2"
+useragent="satanicantichrist/mrpack-to-server (satanciantichrist1@protonmail.com)"
+
+api_call(){ #Return json data from api
+    echo $(curl -A "$useragent" $api/$1)
+}
+
+api_call "search" "["query:gravestones"]"
