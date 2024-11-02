@@ -1,11 +1,60 @@
 #!/bin/bash
+#exec $0 menu_init
+tput smcup
 set -e 
+trap cleanup SIGINT
 
-api="https://staging-api.modrinth.com/v2"
+cleanup(){
+    tput rmcup
+    exit
+}
+
+close(){
+    cleanup
+}
+
+api="https://api.modrinth.com/v2"
 useragent="satanicantichrist/mrpack-to-server (satanciantichrist1@protonmail.com)"
 
 api_call(){ #Return json data from api
     echo $(curl -A "$useragent" $api/$1)
 }
 
-api_call "search" "["query:gravestones"]"
+get_data(){
+    jq -r $1 <<<$2
+}
+
+menu_init(){
+    clear
+    echo "1) search for project"
+    echo "2) download project by id/slug"
+    
+    read choice
+
+    if [[ $choice == 1 ]]; then
+        echo ...
+    fi
+
+    if [[ $choice == 2 ]]; then
+        menu_download_by_id
+    fi
+    
+    close
+
+}
+
+menu_download_by_id(){
+    clear
+    read -p "Project id/slug: " id
+    echo "Searching for project..."
+    json=$(api_call "project/$id")
+    echo 
+
+    echo "Project - $(get_data ".title" "$json") [$(get_data ".id" "$json")]"
+
+    echo 
+    echo $(get_data ".description" "$json")
+    pause
+}
+
+menu_init
