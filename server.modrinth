@@ -6,18 +6,23 @@ trap cleanup SIGINT
 
 cleanup(){
     tput rmcup
-    exit
+    exit $1
 }
 
 close(){
     cleanup
 }
-
 api="https://api.modrinth.com/v2"
 useragent="satanicantichrist/mrpack-to-server (satanciantichrist1@protonmail.com)"
 
 api_call(){ #Return json data from api
     echo $(curl -A "$useragent" $api/$1)
+}
+
+pause (){ #pauses script with read, can display message
+    echo $1
+    echo "Press enter to continue."
+    read end
 }
 
 get_data(){
@@ -39,7 +44,7 @@ menu_init(){
         menu_download_by_id
     fi
     
-    close
+    close 1
 
 }
 
@@ -48,13 +53,23 @@ menu_download_by_id(){
     read -p "Project id/slug: " id
     echo "Searching for project..."
     json=$(api_call "project/$id")
-    echo 
+    
+    if [[ $json == "" ]]; then
+        pause "Project not found"
+        close 1
+    fi
 
+    echo 
+    
     echo "Project - $(get_data ".title" "$json") [$(get_data ".id" "$json")]"
 
     echo 
     echo $(get_data ".description" "$json")
-    pause
+
+
+
+    read end
 }
 
 menu_init
+close 0
