@@ -1,74 +1,71 @@
 #!/bin/bash
 #exec $0 menu_init
 tput smcup
-set -e 
+set -e
 trap cleanup SIGINT
 
-cleanup(){
-    tput rmcup
-    exit $1
+cleanup() {
+	tput rmcup
+	exit $1
 }
 
-close(){
-    cleanup
+close() {
+	cleanup
 }
 api="https://api.modrinth.com/v2"
 useragent="satanicantichrist/mrpack-to-server (satanciantichrist1@protonmail.com)"
 
-api_call(){ #Return json data from api
-    echo $(curl -A "$useragent" $api/$1)
+api_call() { #Return json data from api
+	echo $(curl -A "$useragent" $api/$1)
 }
 
-pause (){ #pauses script with read, can display message
-    echo $1
-    echo "Press enter to continue."
-    read end
+pause() { #pauses script with read, can display message
+	echo $1
+	echo "Press enter to continue."
+	read end
 }
 
-get_data(){
-    jq -r $1 <<<$2
+get_data() {
+	jq -r $1 <<<$2
 }
 
-menu_init(){
-    clear
-    echo "1) search for project"
-    echo "2) download project by id/slug"
-    
-    read choice
+menu_init() {
+	clear
+	echo "1) search for project"
+	echo "2) download project by id/slug"
 
-    if [[ $choice == 1 ]]; then
-        echo ...
-    fi
+	read choice
 
-    if [[ $choice == 2 ]]; then
-        menu_download_by_id
-    fi
-    
-    close 1
+	if [[ $choice == 1 ]]; then
+		echo ...
+	fi
+
+	if [[ $choice == 2 ]]; then
+		menu_download_by_id
+	fi
+
+	close 1
 
 }
 
-menu_download_by_id(){
-    clear
-    read -p "Project id/slug: " id
-    echo "Searching for project..."
-    json=$(api_call "project/$id")
-    
-    if [[ $json == "" ]]; then
-        pause "Project not found"
-        close 1
-    fi
+menu_download_by_id() {
+	clear
+	read -p "Project id/slug: " id
+	echo "Searching for project..."
+	json=$(api_call "project/$id")
+	if [[ $json == "" ]]; then
+		pause "Project not found"
+		close 1
+	fi
 
-    echo 
-    
-    echo "Project - $(get_data ".title" "$json") [$(get_data ".id" "$json")]"
+	echo
 
-    echo 
-    echo $(get_data ".description" "$json")
+	echo "Project - $(get_data ".title" "$json") [$(get_data ".id" "$json")]"
 
+	echo
+	echo $(get_data ".description" "$json")
 
-
-    read end
+	read end
 }
 
 menu_init
