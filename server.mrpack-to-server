@@ -3,8 +3,8 @@
 set -e
 
 filepath=$1
-
-tmpdir=$(mkdir ./tmp)
+tmpdir="./tmp"
+mkdir ./tmp
 
 unzip "$filepath" -d "$tmpdir"
 
