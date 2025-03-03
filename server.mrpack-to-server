@@ -7,7 +7,7 @@ tmpdir="./tmp"
 mkdir ./tmp
 
 unzip "$filepath" -d "$tmpdir"
-
+chmod --recursive +rwx $tmpdir
 useragent="satanicantichrist/mrpack-to-server (satanciantichrist1@protonmail.com)"
 data=$(cat "$tmpdir/modrinth.index.json")
 packversion=$(echo $data | jq '."versionId"' | cut -d "\"" -f2)
@@ -100,3 +100,5 @@ if [[ "$quilt" != "null" ]]; then
   echo "quilt-loader-version: $quilt; minecraft-version: $minecraft; pack-version: $packversion" >$path/versions.txt
   echo Server generated. To start server, run quilt-server-launch.jar
 fi
+
+rm -rf $tmpdir
